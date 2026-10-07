@@ -39,6 +39,16 @@ h1, h2, h3, h4, h5, h6, .font-serif {
   font-family: var(--font-serif), Georgia, Cambria, "Times New Roman", Times, serif;
 }
 
+input, textarea, [contenteditable="true"] {
+  user-select: text !important;
+  -webkit-user-select: text !important;
+}
+
+img {
+  -webkit-user-drag: none;
+  user-drag: none;
+}
+
 /* Custom Prose / Article Typography Styles for Tiptap rendered content */
 .prose-custom {
   line-height: 1.8;

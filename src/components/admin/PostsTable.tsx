@@ -84,10 +84,12 @@ export function PostsTable({ initialPosts }: PostsTableProps) {
       });
 
       if (res.ok) {
-        setPosts(posts.filter((p) => p._id !== postId));
+        setPosts((prev) => prev.filter((p) => p._id !== postId));
         setConfirmDeleteId(null);
+        router.refresh();
       } else {
-        alert('અહેવાલ ડિલીટ કરવામાં સમસ્યા આવી.');
+        const json = await res.json().catch(() => ({}));
+        alert(json.error || 'અહેવાલ ડિલીટ કરવામાં સમસ્યા આવી.');
       }
     } catch {
       alert('Error deleting post');

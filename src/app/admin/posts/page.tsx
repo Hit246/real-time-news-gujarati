@@ -8,7 +8,7 @@ import { getAdminClient } from '@/lib/sanity/client';
 import { Post } from '@/types/sanity';
 
 export default async function AdminPostsPage() {
-  let allPosts: Post[] = SAMPLE_POSTS;
+  let allPosts: Post[] = [];
 
   if (isSanityConfigured()) {
     try {
@@ -33,12 +33,16 @@ export default async function AdminPostsPage() {
         isBreaking,
         isOpinion,
         seoTitle,
-        seoDescription
+        seoDescription,
+        viewsCount
       }`);
-      if (sanityPosts?.length) allPosts = sanityPosts;
+      allPosts = sanityPosts || [];
     } catch (err) {
       console.error('Error fetching admin posts, using fallback:', err);
+      allPosts = SAMPLE_POSTS;
     }
+  } else {
+    allPosts = SAMPLE_POSTS;
   }
 
   return (

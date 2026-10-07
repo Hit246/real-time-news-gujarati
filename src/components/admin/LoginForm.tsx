@@ -71,7 +71,7 @@ export function LoginForm() {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="realtimegujaratinews@gmail.com"
+              placeholder="yournews@gmail.com"
               className="w-full pl-9 pr-3 py-2.5 text-sm bg-zinc-50 dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700 rounded-sm focus:outline-none focus:border-red-600 focus:bg-white dark:focus:bg-zinc-950 transition-colors"
             />
           </div>

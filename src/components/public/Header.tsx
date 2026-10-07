@@ -19,7 +19,7 @@ export async function Header() {
   }).format(new Date());
 
   return (
-    <header className="border-b border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 sticky top-0 z-40">
+    <header className="border-b border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950">
       {/* Top utility bar */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 border-b border-zinc-100 dark:border-zinc-900 flex justify-between items-center text-xs text-zinc-600 dark:text-zinc-400">
         <div className="font-sans font-medium text-xs">{currentDate}</div>
@@ -56,8 +56,8 @@ export async function Header() {
         </p>
       </div>
 
-      {/* Navigation bar */}
-      <nav className="border-t border-zinc-200 dark:border-zinc-800 bg-zinc-50/90 dark:bg-zinc-900/90 backdrop-blur-xs">
+      {/* Navigation bar - Sticky slim menu bar */}
+      <nav className="sticky top-0 z-40 border-t border-zinc-200 dark:border-zinc-800 bg-white/95 dark:bg-zinc-900/95 backdrop-blur-md shadow-xs">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between overflow-x-auto py-2.5">
           <div className="flex items-center gap-6 sm:gap-8 text-sm font-bold tracking-wide whitespace-nowrap">
             <Link

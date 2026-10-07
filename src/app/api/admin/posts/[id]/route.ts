@@ -202,6 +202,8 @@ export async function DELETE(req: Request, { params }: Params) {
     try {
       const client = getAdminClient();
       await client.delete(id);
+      await client.delete(`drafts.${id}`).catch(() => {});
+      await client.delete({ query: '*[_type == "revision" && postId == $id]', params: { id } }).catch(() => {});
 
       // Write Audit Log
       await client.create({
@@ -212,8 +214,9 @@ export async function DELETE(req: Request, { params }: Params) {
         timestamp: new Date().toISOString(),
         performedBy: session.user.email,
       });
-    } catch (err) {
+    } catch (err: any) {
       console.error('Error deleting post in Sanity:', err);
+      return NextResponse.json({ error: err.message || 'Failed to delete post in database' }, { status: 500 });
     }
   }
 

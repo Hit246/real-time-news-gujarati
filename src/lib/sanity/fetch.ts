@@ -40,71 +40,64 @@ export async function getCategories(): Promise<Category[]> {
 }
 
 export async function getBreakingNews(): Promise<Pick<Post, '_id' | 'title' | 'slug' | 'publishedAt'>[]> {
-  const fallbackBreaking = SAMPLE_POSTS.filter((p) => p.status === 'published' && p.isBreaking).map((p) => ({
-    _id: p._id,
-    title: p.title,
-    slug: p.slug,
-    publishedAt: p.publishedAt,
-  }));
-
   if (!isSanityConfigured()) {
-    return fallbackBreaking;
+    return SAMPLE_POSTS.filter((p) => p.status === 'published' && p.isBreaking).map((p) => ({
+      _id: p._id,
+      title: p.title,
+      slug: p.slug,
+      publishedAt: p.publishedAt,
+    }));
   }
   try {
     const posts = await sanityClient.fetch(BREAKING_POSTS_QUERY);
-    return posts?.length ? posts : fallbackBreaking;
+    return posts || [];
   } catch (error) {
     console.error('Error fetching breaking news:', error);
-    return fallbackBreaking;
+    return [];
   }
 }
 
 export async function getHomePosts(): Promise<Post[]> {
-  const fallback = SAMPLE_POSTS.filter((p) => p.status === 'published');
   if (!isSanityConfigured()) {
-    return fallback;
+    return SAMPLE_POSTS.filter((p) => p.status === 'published');
   }
   try {
     const posts = await sanityClient.fetch(HOME_POSTS_QUERY);
-    return posts?.length ? posts : fallback;
+    return posts || [];
   } catch (error) {
-    console.error('Error fetching home posts, using fallback:', error);
-    return fallback;
+    console.error('Error fetching home posts:', error);
+    return [];
   }
 }
 
 export async function getPostBySlug(slug: string): Promise<Post | null> {
-  const fallbackPost = SAMPLE_POSTS.find((p) => p.slug.current === slug && p.status === 'published') || null;
-
   if (!isSanityConfigured()) {
-    return fallbackPost;
+    return SAMPLE_POSTS.find((p) => p.slug.current === slug && p.status === 'published') || null;
   }
   try {
     const post = await sanityClient.fetch(POST_BY_SLUG_QUERY, { slug });
-    return post || fallbackPost;
+    return post || null;
   } catch (error) {
     console.error(`Error fetching post by slug "${slug}":`, error);
-    return fallbackPost;
+    return null;
   }
 }
 
 export async function getRelatedPosts(categoryId?: string, currentId?: string): Promise<Post[]> {
-  const fallbackRelated = SAMPLE_POSTS.filter(
-    (p) => p.status === 'published' && p._id !== currentId
-  ).slice(0, 4);
-
   if (!isSanityConfigured()) {
-    return fallbackRelated;
+    return SAMPLE_POSTS.filter(
+      (p) => p.status === 'published' && p._id !== currentId
+    ).slice(0, 4);
   }
   try {
     const posts = await sanityClient.fetch(RELATED_POSTS_QUERY, {
       categoryId: categoryId || '',
       currentId: currentId || '',
     });
-    return posts?.length ? posts : fallbackRelated;
+    return posts || [];
   } catch (error) {
     console.error('Error fetching related posts:', error);
-    return fallbackRelated;
+    return [];
   }
 }
 
@@ -112,11 +105,10 @@ export async function getCategoryPosts(categorySlug: string, page: number = 1, p
   const start = (page - 1) * pageSize;
   const end = start + pageSize;
 
-  const fallbackFiltered = SAMPLE_POSTS.filter(
-    (p) => p.status === 'published' && p.category?.slug?.current === categorySlug
-  );
-
   if (!isSanityConfigured()) {
+    const fallbackFiltered = SAMPLE_POSTS.filter(
+      (p) => p.status === 'published' && p.category?.slug?.current === categorySlug
+    );
     return {
       posts: fallbackFiltered.slice(start, end),
       total: fallbackFiltered.length,
@@ -131,15 +123,6 @@ export async function getCategoryPosts(categorySlug: string, page: number = 1, p
       sanityClient.fetch(`count(*[_type == "post" && status == "published" && category->slug.current == $categorySlug])`, { categorySlug }),
     ]);
 
-    if (!posts || posts.length === 0) {
-      return {
-        posts: fallbackFiltered.slice(start, end),
-        total: fallbackFiltered.length,
-        page,
-        totalPages: Math.ceil(fallbackFiltered.length / pageSize) || 1,
-      };
-    }
-
     return {
       posts: posts || [],
       total: total || 0,
@@ -149,10 +132,10 @@ export async function getCategoryPosts(categorySlug: string, page: number = 1, p
   } catch (error) {
     console.error(`Error fetching category posts for "${categorySlug}":`, error);
     return {
-      posts: fallbackFiltered.slice(start, end),
-      total: fallbackFiltered.length,
+      posts: [],
+      total: 0,
       page,
-      totalPages: Math.ceil(fallbackFiltered.length / pageSize) || 1,
+      totalPages: 1,
     };
   }
 }
@@ -160,40 +143,37 @@ export async function getCategoryPosts(categorySlug: string, page: number = 1, p
 export async function searchPosts(query: string): Promise<Post[]> {
   if (!query || query.trim().length === 0) return [];
 
-  const lower = query.toLowerCase();
-  const fallbackSearch = SAMPLE_POSTS.filter(
-    (p) =>
-      p.status === 'published' &&
-      (p.title.toLowerCase().includes(lower) ||
-        p.summary.toLowerCase().includes(lower) ||
-        p.tags?.some((t) => t.toLowerCase().includes(lower)))
-  );
-
   if (!isSanityConfigured()) {
-    return fallbackSearch;
+    const lower = query.toLowerCase();
+    return SAMPLE_POSTS.filter(
+      (p) =>
+        p.status === 'published' &&
+        (p.title.toLowerCase().includes(lower) ||
+          p.summary.toLowerCase().includes(lower) ||
+          p.tags?.some((t) => t.toLowerCase().includes(lower)))
+    );
   }
 
   try {
     const term = `*${query}*`;
     const posts = await sanityClient.fetch(SEARCH_POSTS_QUERY, { term });
-    return posts?.length ? posts : fallbackSearch;
+    return posts || [];
   } catch (error) {
     console.error(`Error searching posts for "${query}":`, error);
-    return fallbackSearch;
+    return [];
   }
 }
 
 // Admin / Preview query
 export async function getPreviewPostById(id: string): Promise<Post | null> {
-  const fallback = SAMPLE_POSTS.find((p) => p._id === id) || null;
   if (!isSanityConfigured()) {
-    return fallback;
+    return SAMPLE_POSTS.find((p) => p._id === id) || null;
   }
   try {
     const post = await sanityClient.fetch(PREVIEW_POST_BY_ID_QUERY, { id });
-    return post || fallback;
+    return post || null;
   } catch (error) {
     console.error(`Error fetching preview post by id "${id}":`, error);
-    return fallback;
+    return null;
   }
 }
