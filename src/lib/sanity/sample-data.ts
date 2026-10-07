@@ -45,7 +45,7 @@ export const SAMPLE_AUTHORS: Author[] = [
     name: 'ધવલ ચૌહાણ',
     bio: 'વરિષ્ઠ પત્રકાર અને સ્થાનિક રાજનીતિ તેમજ શાસન વ્યવસ્થાના વિશેષ વિશ્લેષક.',
     image: {
-      alt: 'અંકિતા પટેલ',
+      alt: 'ધવલ ચૌહાણ',
       url: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80',
     },
   },
@@ -55,7 +55,7 @@ export const SAMPLE_AUTHORS: Author[] = [
     name: 'સંજય ભોઈ',
     bio: 'ટેકનોલોજી, સેમિકન્ડક્ટર અને ગુજરાતના ઔદ્યોગિક વિકાસના નિષ્ણાત લેખક.',
     image: {
-      alt: 'સંજય જોશી',
+      alt: 'સંજય ભોઈ',
       url: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80',
     },
   },

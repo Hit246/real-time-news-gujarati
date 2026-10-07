@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { getCategories, getSiteSettings } from '@/lib/sanity/fetch';
 import { ThemeToggle } from '@/components/ui/ThemeToggle';
 import { Search } from 'lucide-react';
+import { PublicNavDrawer } from './PublicNavDrawer';
 
 export async function Header() {
   const [categories, settings] = await Promise.all([
@@ -58,23 +59,27 @@ export async function Header() {
 
       {/* Navigation bar - Sticky slim menu bar */}
       <nav className="sticky top-0 z-40 border-t border-zinc-200 dark:border-zinc-800 bg-white/95 dark:bg-zinc-900/95 backdrop-blur-md shadow-xs">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between overflow-x-auto py-2.5">
-          <div className="flex items-center gap-6 sm:gap-8 text-sm font-bold tracking-wide whitespace-nowrap">
-            <Link
-              href="/"
-              className="text-zinc-950 dark:text-zinc-50 hover:text-red-600 dark:hover:text-red-500 transition-colors"
-            >
-              મુખ્ય પૃષ્ઠ
-            </Link>
-            {categories.map((cat) => (
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between py-2">
+          <div className="flex items-center min-w-0 flex-1">
+            <PublicNavDrawer categories={categories} siteName={settings.siteName} />
+
+            <div className="flex items-center gap-6 sm:gap-8 text-sm font-bold tracking-wide whitespace-nowrap overflow-x-auto py-0.5">
               <Link
-                key={cat._id}
-                href={`/${cat.slug.current}`}
-                className="text-zinc-700 dark:text-zinc-300 hover:text-red-600 dark:hover:text-red-500 transition-colors"
+                href="/"
+                className="text-zinc-950 dark:text-zinc-50 hover:text-red-600 dark:hover:text-red-500 transition-colors"
               >
-                {cat.title}
+                મુખ્ય પૃષ્ઠ
               </Link>
-            ))}
+              {categories.map((cat) => (
+                <Link
+                  key={cat._id}
+                  href={`/${cat.slug.current}`}
+                  className="text-zinc-700 dark:text-zinc-300 hover:text-red-600 dark:hover:text-red-500 transition-colors"
+                >
+                  {cat.title}
+                </Link>
+              ))}
+            </div>
           </div>
 
           <Link
@@ -90,3 +95,4 @@ export async function Header() {
     </header>
   );
 }
+

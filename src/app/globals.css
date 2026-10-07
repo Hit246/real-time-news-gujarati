@@ -2,6 +2,12 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+@theme inline {
+  --font-sans: var(--font-jakarta), var(--font-hind-vadodara), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-serif: var(--font-jakarta), var(--font-anek-gujarati), var(--font-hind-vadodara), system-ui, sans-serif;
+  --font-mono: var(--font-jakarta), var(--font-hind-vadodara), ui-monospace, SFMono-Regular, monospace;
+}
+
 @layer base {
   :root {
     --background: #ffffff;
@@ -25,9 +31,13 @@
 body {
   background-color: var(--background);
   color: var(--foreground);
-  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+  font-family: var(--font-jakarta), var(--font-hind-vadodara), system-ui, -apple-system, sans-serif;
+  line-height: 1.7;
+  letter-spacing: 0.005em;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "kern" 1, "liga" 1;
 }
 
 .dark body {
@@ -36,7 +46,13 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6, .font-serif {
-  font-family: var(--font-serif), Georgia, Cambria, "Times New Roman", Times, serif;
+  font-family: var(--font-jakarta), var(--font-anek-gujarati), var(--font-hind-vadodara), system-ui, sans-serif;
+  letter-spacing: -0.01em;
+  line-height: 1.38;
+}
+
+.font-sans, .font-mono {
+  font-family: var(--font-jakarta), var(--font-hind-vadodara), system-ui, -apple-system, sans-serif;
 }
 
 input, textarea, [contenteditable="true"] {
@@ -51,8 +67,10 @@ img {
 
 /* Custom Prose / Article Typography Styles for Tiptap rendered content */
 .prose-custom {
-  line-height: 1.8;
+  font-family: var(--font-jakarta), var(--font-hind-vadodara), system-ui, sans-serif;
+  line-height: 1.9;
   font-size: 1.125rem;
+  letter-spacing: 0.01em;
 }
 
 .prose-custom p {
@@ -60,20 +78,20 @@ img {
 }
 
 .prose-custom h2 {
-  font-family: var(--font-serif), Georgia, serif;
+  font-family: var(--font-jakarta), var(--font-anek-gujarati), var(--font-hind-vadodara), sans-serif;
   font-size: 1.875rem;
   font-weight: 700;
-  line-height: 1.3;
+  line-height: 1.38;
   margin-top: 2.5rem;
   margin-bottom: 1rem;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.015em;
 }
 
 .prose-custom h3 {
-  font-family: var(--font-serif), Georgia, serif;
+  font-family: var(--font-jakarta), var(--font-anek-gujarati), var(--font-hind-vadodara), sans-serif;
   font-size: 1.5rem;
   font-weight: 600;
-  line-height: 1.4;
+  line-height: 1.42;
   margin-top: 2rem;
   margin-bottom: 0.75rem;
 }
@@ -81,10 +99,11 @@ img {
 .prose-custom blockquote {
   border-left: 3px solid #dc2626;
   padding-left: 1.5rem;
-  font-style: italic;
-  font-family: var(--font-serif), Georgia, serif;
-  font-size: 1.25rem;
-  line-height: 1.6;
+  font-style: normal;
+  font-weight: 500;
+  font-family: var(--font-jakarta), var(--font-anek-gujarati), var(--font-hind-vadodara), sans-serif;
+  font-size: 1.2rem;
+  line-height: 1.75;
   margin: 2rem 0;
 }
 
@@ -123,3 +142,4 @@ img {
   margin: 2rem 0;
   border-radius: 0.25rem;
 }
+

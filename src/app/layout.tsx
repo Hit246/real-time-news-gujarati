@@ -1,18 +1,29 @@
 import type { Metadata } from "next";
-import { Noto_Sans_Gujarati, Noto_Serif_Gujarati } from "next/font/google";
+import {
+  Hind_Vadodara,
+  Anek_Gujarati,
+  Plus_Jakarta_Sans,
+} from "next/font/google";
 import "./globals.css";
 
-const notoSansGujarati = Noto_Sans_Gujarati({
-  subsets: ["gujarati", "latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-sans",
+const plusJakartaSans = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-jakarta",
   display: "swap",
 });
 
-const notoSerifGujarati = Noto_Serif_Gujarati({
+const hindVadodara = Hind_Vadodara({
   subsets: ["gujarati", "latin"],
-  weight: ["600", "700", "900"],
-  variable: "--font-serif",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-hind-vadodara",
+  display: "swap",
+});
+
+const anekGujarati = Anek_Gujarati({
+  subsets: ["gujarati", "latin"],
+  weight: ["500", "600", "700", "800"],
+  variable: "--font-anek-gujarati",
   display: "swap",
 });
 
@@ -34,7 +45,7 @@ export default function RootLayout({
   return (
     <html
       lang="gu"
-      className={`${notoSansGujarati.variable} ${notoSerifGujarati.variable} h-full antialiased`}
+      className={`${plusJakartaSans.variable} ${hindVadodara.variable} ${anekGujarati.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <head>
