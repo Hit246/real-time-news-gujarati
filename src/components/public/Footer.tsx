@@ -22,6 +22,18 @@ export async function Footer() {
               ગુજરાત અને દેશના નાગરિકો માટે સચોટ, વિશ્વસનીય અને તપાસાત્મક પત્રકારત્વ.
               રાજનીતિ, અર્થતંત્ર, સ્થાનિક વિકાસ અને ટેકનોલોજીના સચોટ અહેવાલો.
             </p>
+
+            {/* Editors / Owners */}
+            <div className="mt-5 pt-4 border-t border-zinc-200/80 dark:border-zinc-800/80 max-w-sm">
+              <div className="text-[11px] font-mono uppercase tracking-wider text-red-600 dark:text-red-500 font-bold">
+                સંપાદક અને માલિક (Editors &amp; Owners)
+              </div>
+              <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm font-serif font-bold text-zinc-900 dark:text-zinc-100">
+                <span>ધવલ ચૌહાણ</span>
+                <span className="text-red-600">•</span>
+                <span>સંજય ભોઈ</span>
+              </div>
+            </div>
           </div>
 
           {/* Categories */}
