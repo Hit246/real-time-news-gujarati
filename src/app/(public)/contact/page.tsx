@@ -42,7 +42,7 @@ export default function ContactPage() {
             <Phone className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
             <div>
               <h3 className="font-bold text-sm">ન્યૂઝરૂમ હેલ્પલાઇન</h3>
-              <p className="text-sm text-zinc-600 dark:text-zinc-400">+91 98765 43210</p>
+              <p className="text-sm text-zinc-600 dark:text-zinc-400">+91 95373 82682</p>
             </div>
           </div>
 
@@ -51,8 +51,8 @@ export default function ContactPage() {
             <div>
               <h3 className="font-bold text-sm">મુખ્ય કાર્યાલય</h3>
               <p className="text-sm text-zinc-600 dark:text-zinc-400">
-                પ્રેસ ભવન, આશ્રમ રોડ,<br />
-                અમદાવાદ, ગુજરાત - ૩૮૦૦૦૯
+                ઈડર,<br />
+                સાબરકાંઠા, ગુજરાત - ૩૮૩૪૩૦
               </p>
             </div>
           </div>
